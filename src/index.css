@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.landingInGradient {
+  background: linear-gradient(90deg, #ea7c8f 50%, #9e65e8 100%);
+}
+.position-relative{
+  position: relative;
+}
+.rewardDesignCenter:before{
+  content: '';
+  background: linear-gradient(0deg, #f448ab 24.22%, #7968ff 100%);
+  height: 70%;
+  position: absolute;
+  width: 200%;
+  bottom: -48%;
+  transform: rotate(-13deg);
+  border: 40px solid #26205D;
+  z-index: 0;
+}
+.rewardDesignLeft:after{
+  content: '';
+  background: linear-gradient(183deg, #aa61d3 80%, #7968ff);
+  position: absolute;
+  bottom: -35%;
+  transform: matrix(0.99, 0.25, 0.11, -0.97, 0, 0);
+  border: 40px solid #26205D;
+  width: 2216.72px;
+  height: 934.45px;
+  left: -110px;
+  top: 550px;
+  z-index: 2;
+}
+.rewardDesignRight:after{
+  content: '';
+  background: linear-gradient(175deg, #f448ab 54.22%, #7968ff 100%);
+  height: 900px;
+  position: absolute;
+  width: 2200px;
+  bottom: -1070px;
+  right: -550px;
+  transform: matrix(-0.77, 0.75, -0.56, -0.76, 0, 0);
+  border: 40px solid #26205D;
+  z-index: 50;
+}
+.claimed-content{
+  filter: blur(5px);
+  opacity: 0.3;
+}
+.claimed:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  background: #2D2169;
+  z-index: 0;
+  width: 100%;
+  opacity: 0.8;
+}
+.claimed:after {
+  content: 'Claimed';
+  position: absolute;
+  z-index: 0;
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: 5px solid #FFFFFF;
+  font-weight: 400;
+  font-size: min(15vh, 15vW);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) rotate(-30deg);
+}
+.ahwa-image{
+  position: absolute;
+  bottom: 70px;
+  left:70px;
+  z-index: 10;
+  height: 280px;
+}
+.winston-image{
+  position: absolute;
+  bottom: 70px;
+  z-index: 51;
+  right: 70px;
+  height: 500px;
+  
+}
+.custom-footer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  height: 600px;
+
+}
+.node-text{
+  display: none;
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+.node-g-circle:hover .node-text, .node-g-rect:hover .node-text{
+  display: block;
+}
