@@ -61,7 +61,8 @@ export default function Dashboard() {
         <Grid item md={8}>
           <Typography variant="h4">Setup</Typography>
           <Typography variant="subtitle2" mt={2}>
-            Welcome to the Winston Shopping Cart built to utilize blockchain technologies to enable a decentralized shopping expereince.
+            Welcome to the Winston Shopping Cart built to utilize blockchain
+            technologies to enable a decentralized shopping expereince.
           </Typography>
           <Grid container spacing={3}>
             <Grid item mt="50px">
@@ -72,28 +73,15 @@ export default function Dashboard() {
               </Paper>
               <Paper color="secondary" sx={{ py: 1, mt: "5px" }}>
                 <Typography variant="subtitle1" textAlign={"center"}>
-                  Winston; Your personal assistant to all things blockchain is here to help you build the customer expereince expected from a great platform utilzing blockchain technology.
+                  Winston; Your personal assistant to all things blockchain is
+                  here to help you build the customer expereince expected from a
+                  great platform utilzing blockchain technology.
                 </Typography>
               </Paper>
             </Grid>
             <Grid item mt="50px">
               <Paper color="secondary" sx={{ p: 2 }}>
-                <Typography fontSize={96} fontWeight={300}></Typography>
-              </Paper>
-              <Paper color="secondary" sx={{ py: 1, mt: "5px" }}>
-                <Typography variant="subtitle1" textAlign={"center"}>
-                  Hours left
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item mt="50px">
-              <Paper color="secondary" sx={{ p: 2 }}>
-                <Typography fontSize={96} fontWeight={300}></Typography>
-              </Paper>
-              <Paper color="secondary" sx={{ py: 1, mt: "5px" }}>
-                <Typography variant="subtitle1" textAlign={"center"}>
-                  Minutes left
-                </Typography>
+                
               </Paper>
             </Grid>
           </Grid>

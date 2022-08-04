@@ -36,7 +36,7 @@ function App() {
       </Route>
       <Route path="/" element={<PublicPageLayout />}>
         <Route path="/" element={<MainComponent />} />
-        {config.admin.length === 0 ? (
+        {config.admin.length !== 0 ? (
           <Route path="/setup" element={<SetupComponent />} />
         ) : (
           <Route path="/sign-in" element={<SignInComponent />} />
