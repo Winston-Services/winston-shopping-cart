@@ -6,6 +6,8 @@ import DashboardPageLayout from "./layouts/DashboardPageLayout";
 import config from "./config";
 
 const MainComponent = React.lazy(() => import("./pages/Main"));
+const SetupComponent = React.lazy(() => import("./pages/setup"));
+const SignInComponent = React.lazy(() => import("./pages/setup"));
 const DashboardComponent = React.lazy(() => import("./pages/Dashboard"));
 function App() {
   return (
@@ -35,9 +37,9 @@ function App() {
       <Route path="/" element={<PublicPageLayout />}>
         <Route path="/" element={<MainComponent />} />
         {config.admin.length === 0 ? (
-          <Route path="/setup" element={<MainComponent />} />
+          <Route path="/setup" element={<SetupComponent />} />
         ) : (
-          <Route path="/sign-in" element={<MainComponent />} />
+          <Route path="/sign-in" element={<SignInComponent />} />
         )}
       </Route>
       <Route path="*" element={<Navigate to={"/"} />} />
