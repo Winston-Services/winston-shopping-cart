@@ -13,7 +13,7 @@ import config from "../../config";
 import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Dashboard() {
-  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [captcha, setCaptcha] = useState("");
   const [isLeadLoading, setIsLeadLoading] = useState(false);
   const [response, setResponse] = useState("");
@@ -54,23 +54,25 @@ export default function Dashboard() {
 
   return (
     <Container sx={{ mt: "100px" }}>
-      <Grid container display={"flex"} alignItems={"center"}>
+      <Grid container display="block">
         <Grid item md={4}>
-          Test Area Two
+          Setup Video Guide
         </Grid>
         <Grid item md={8}>
-          <Typography variant="h4">Coming soon</Typography>
+          <Typography variant="h4">Setup</Typography>
           <Typography variant="subtitle2" mt={2}>
-            {config.launchDescription}
+            Welcome to the Winston Shopping Cart built to utilize blockchain technologies to enable a decentralized shopping expereince.
           </Typography>
           <Grid container spacing={3}>
             <Grid item mt="50px">
               <Paper color="secondary" sx={{ p: 2 }}>
-                <Typography fontSize={96} fontWeight={300}></Typography>
+                <Typography fontSize={96} fontWeight={300}>
+                  Winston Defi Shopping Cart
+                </Typography>
               </Paper>
               <Paper color="secondary" sx={{ py: 1, mt: "5px" }}>
                 <Typography variant="subtitle1" textAlign={"center"}>
-                  Days left
+                  Winston; Your personal assistant to all things blockchain is here to help you build the customer expereince expected from a great platform utilzing blockchain technology.
                 </Typography>
               </Paper>
             </Grid>
@@ -107,12 +109,12 @@ export default function Dashboard() {
               </Typography>
               <TextField
                 fullWidth
-                type={"email"}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                label="Email address"
+                type={"text"}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                label="Admin Address"
                 variant="outlined"
-                placeholder="Enter email address"
+                placeholder="Enter your Wallet Address here."
                 disabled={isLeadLoading}
                 helperText={response.msg}
                 error={response.isError}
