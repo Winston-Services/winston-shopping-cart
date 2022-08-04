@@ -3,6 +3,8 @@ import { Box, CircularProgress } from "@mui/material";
 import { Routes, Route, Navigate } from "react-router-dom";
 import PublicPageLayout from "./layouts/PublicPageLayout";
 import DashboardPageLayout from "./layouts/DashboardPageLayout";
+import config from "./config";
+
 const MainComponent = React.lazy(() => import("./pages/Main"));
 const DashboardComponent = React.lazy(() => import("./pages/Dashboard"));
 function App() {
@@ -30,9 +32,13 @@ function App() {
           }
         />
       </Route>
-
       <Route path="/" element={<PublicPageLayout />}>
         <Route path="/" element={<MainComponent />} />
+        {config.admin.length === 0 ? (
+          <Route path="/setup" element={<MainComponent />} />
+        ) : (
+          <Route path="/sign-in" element={<MainComponent />} />
+        )}
       </Route>
       <Route path="*" element={<Navigate to={"/"} />} />
     </Routes>
