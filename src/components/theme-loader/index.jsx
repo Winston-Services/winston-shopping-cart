@@ -35,8 +35,8 @@ export default function ThemeLoader(props) {
       type: "dark",
       mode: "dark",
       winston: {
-        main: "linear-gradient(92.44deg, #EA7A8F 3.93%, #E452C8 98.71%)",
-        reverseMain: "linear-gradient(92.44deg, #E452C8 3.93%, #EA7A8F 98.71%)",
+        /*main: "linear-gradient(92.44deg, #EA7A8F 3.93%, #E452C8 98.71%)",
+        reverseMain: "linear-gradient(92.44deg, #E452C8 3.93%, #EA7A8F 98.71%)",*/
         dark: "#EA7A8F",
         light: "#E452C8",
         yellow: "#FFD215",
@@ -73,8 +73,8 @@ export default function ThemeLoader(props) {
       MuiBadge: {
         styleOverrides: {
           colorPrimary: {
-            background:
-              "linear-gradient(180deg, #EA7A8F 0%, #E452C8 100%) !important",
+            /*background:
+              "linear-gradient(180deg, #EA7A8F 0%, #E452C8 100%) !important",*/
             color: "white",
             // fontSize: 14,
             // fontWeight: 800,
@@ -107,8 +107,7 @@ export default function ThemeLoader(props) {
           {
             props: { color: "secondary" },
             style: {
-              backgroundImage:
-                "linear-gradient(180deg, #EA7A8F 0%, #E452C8 100%)",
+              /*backgroundImage: "linear-gradient(180deg, #EA7A8F 0%, #E452C8 100%)",*/
             },
           },
           {
@@ -279,7 +278,7 @@ export default function ThemeLoader(props) {
         },
         tabIndicatorStyle: {
           style: {
-            background: "linear-gradient(90deg, #EA7A8F 0%, #E452C8 99.4%)",
+            /*background: "linear-gradient(90deg, #EA7A8F 0%, #E452C8 99.4%)",*/
           },
         },
       },

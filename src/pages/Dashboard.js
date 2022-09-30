@@ -78,25 +78,25 @@ export default function Dashboard() {
       reviews: [
         {
           comment: "Love the rewards",
-          commenterName: "",
+          commenterName: "Jane Mary",
           commenterEmail: "",
           rating: 5,
         },
         {
           comment: "Love the rewards",
-          commenterName: "",
+          commenterName: "Jane Mary",
           commenterEmail: "",
           rating: 3,
         },
         {
           comment: "Can't get it to work.",
-          commenterName: "",
+          commenterName: "Jane Mary",
           commenterEmail: "",
           rating: 1,
         },
         {
           comment: "Love the rewards",
-          commenterName: "",
+          commenterName: "Jane Mary",
           commenterEmail: "",
           rating: 5,
         },

@@ -7,6 +7,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { Paper } from "@mui/material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,11 +20,10 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
+      {value === index &&
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+          {children}
+        </Box>}
     </div>
   );
 }
@@ -31,19 +31,34 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
 
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`
   };
 }
-const ReviewCard = (props) => {
-  return <Grid item sx={12}>
-              <>TODO :: BUILD REVIEW CARD.</>
-  </Grid>;
+const ReviewCard = props => {
+  // console.log(props);
+  return (
+    <Grid item xs={12} sx={{ m: ".25rem" }}>
+      <Paper elevation={3} sx={{ p: ".25rem" }}>
+        <a href={`mailto:${props.review.commenterEmail}`}>
+          {props.review.commenterName || "User"}
+        </a>
+
+        <Typography variant="subtitle2">
+          {Array(props.review.rating).fill('🌟').join('')}<span style={{float:"right"}}>{props.review.rating} Stars</span>
+        </Typography>
+
+        <Typography>
+        🗣️{props.review.comment}
+        </Typography>
+      </Paper>
+    </Grid>
+  );
 };
 export default function FullWidthTabs(props) {
   const theme = useTheme();
@@ -64,25 +79,27 @@ export default function FullWidthTabs(props) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Overview" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Reviews" {...a11yProps(2)} />
+          <Tab label="Product Overview" {...a11yProps(0)} />
+          <Tab label="Product Information" {...a11yProps(1)} />
+          <Tab label="Product Reviews" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <Typography component="subtitle">{props.overview}</Typography>
+        <Typography component="subtitle1">
+          {props.overview}
+        </Typography>
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
-        Item Two
+        Product Information
       </TabPanel>
       <TabPanel value={value} index={2} dir={theme.direction}>
         <Grid container display="block">
           <Grid item sm={12}>
-            <Typography component="subtitle" >Reviews</Typography>
+            <Typography component="subtitle1">Reviews</Typography>
           </Grid>
-          {props.reviews.map((review) => (
-            <ReviewCard review={review} />
-          ))}
+          {props.reviews.map((review, id) =>
+            <ReviewCard review={review} key={`review-${id}`} />
+          )}
         </Grid>
       </TabPanel>
     </Box>

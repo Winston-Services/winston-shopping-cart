@@ -1,3 +1,22 @@
+/* Scroll style */
+::-webkit-scrollbar {
+  width: .75rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  width: 8px;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 85px;
+  background-color: #1d1751;
+  border-radius: 55px 5px;
+}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -21,7 +40,7 @@ code {
 }
 .rewardDesignCenter:before{
   content: '';
-  background: linear-gradient(0deg, #f448ab 24.22%, #7968ff 100%);
+  /*background: linear-gradient(0deg, #f448ab 24.22%, #7968ff 100%);*/
   height: 70%;
   position: absolute;
   width: 200%;
@@ -32,7 +51,7 @@ code {
 }
 .rewardDesignLeft:after{
   content: '';
-  background: linear-gradient(183deg, #aa61d3 80%, #7968ff);
+  /*background: linear-gradient(183deg, #aa61d3 80%, #7968ff);*/
   position: absolute;
   bottom: -35%;
   transform: matrix(0.99, 0.25, 0.11, -0.97, 0, 0);
@@ -45,7 +64,7 @@ code {
 }
 .rewardDesignRight:after{
   content: '';
-  background: linear-gradient(175deg, #f448ab 54.22%, #7968ff 100%);
+  /*background: linear-gradient(175deg, #f448ab 54.22%, #7968ff 100%);*/
   height: 900px;
   position: absolute;
   width: 2200px;

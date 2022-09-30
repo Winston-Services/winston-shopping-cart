@@ -24,73 +24,87 @@ import {
   TableBody,
   TableCell,
   TableRow,
+  Box
 } from "@mui/material";
-import { Box } from "@mui/system";
 import FullWidthTabs from "./ItemTabs";
+import { store } from "../store";
 
-const ExpandMore = styled((props) => {
+const ExpandMore = styled(props => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
   transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
+    duration: theme.transitions.duration.shortest
+  })
 }));
 
 function Tag(props) {
   const { children } = props;
   return (
-    <Typography
-      component="box"
+    <Box
+      //component="Box"
       color="text.secondary"
       sx={{
-        borderRadius: "6px",
-        border: ".05rem solid red",
         margin: ".05rem",
         paddingX: ".15rem",
+        marginY: "1.75rem",
+        display: "inline"
       }}
     >
       {children}
-    </Typography>
+    </Box>
   );
 }
-export default function ItemCard(props) {
-  const [expanded, setExpanded] = React.useState(false);
-  const [showShare, setShowShare] = React.useState(false);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-  const [currency, setCurrency] = React.useState("");
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+export default function ItemCard(props) {
+  const appState = React.useContext(store);
+  const { state, dispatch } = appState;
+  const handleExpandClick = () => {
+    dispatch({
+      type: "setExpanded",
+      payload: { 
+        item: props.id,
+        expanded: props.expanded
+      }
+    });
   };
+
+  const handleChange = event => {
+    dispatch({
+      type: "setCurrency",
+      payload: {
+        currency: event.target.value,
+        item: props.id
+      }
+    });
+  };
+
   return (
-    <Card sx={{ borderRadius: "6px", width:"100%"}}>
+    <Card sx={{ borderRadius: "6px", width: "100%" }}>
       <CardHeader
         sx={{ paddingBottom: "10px" }}
         avatar={
           <Avatar
             sx={{
               bgcolor: "transparent",
-              border: ".05rem dashed #e453c6",
+              // border: ".05rem dashed #e453c6",
               padding: "1rem",
               width: "56px",
-              height: "56px",
+              height: "56px"
             }}
             aria-label="category_brand_logo"
           >
-            <img src={props.thumbnail} width="42px" />
+            <img src={props.thumbnail} width="42px" alt="Product Thumbnail" />
           </Avatar>
         }
         action={
-          props.admin ? (
-            <IconButton aria-label="manage">
-              <MoreVertIcon />
-            </IconButton>
-          ) : null
+          props.admin
+            ? <IconButton aria-label="manage">
+                <MoreVertIcon />
+              </IconButton>
+            : null
         }
         title={
           <Typography
@@ -98,7 +112,13 @@ export default function ItemCard(props) {
             color="text.secondary"
             sx={{ cursor: "pointer", fontWeight: "800" }}
             onClick={() => {
-              props.handleCartMethods.showProductItemDisplay();
+              dispatch({
+                type: "showProductItemDisplay",
+                payload: {
+                  item: props.id,
+                  showItemGridDisplay: !state.showItemGridDisplay
+                }
+              });
             }}
           >
             {props.title}
@@ -112,18 +132,18 @@ export default function ItemCard(props) {
                 color="text.secondary"
                 sx={{
                   textDecoration: "underline dotted #a166e5",
-                  fontWeight: "600",
+                  fontWeight: "600"
                 }}
               >
                 {props.category}
               </Typography>
               <Typography
-                variant="subtitle"
+                variant="subtitle2"
                 color="text.secondary"
                 sx={{
                   p: 1,
                   textDecoration: "underline dotted #b96dc9",
-                  fontWeight: "500",
+                  fontWeight: "500"
                 }}
               >
                 {props.subcategory}
@@ -135,11 +155,7 @@ export default function ItemCard(props) {
       <CardContent sx={{ paddingY: "3px", paddingX: "16px" }}>
         <Grid container alignItems={"center"}>
           <Grid item xs={12} textAlign="center">
-            <Paper
-              color="secondary"
-              sx={{ p: 2 }}
-              align="center"
-            >
+            <Paper color="secondary" sx={{ p: 2 }} align="center" elevation={3}>
               <img
                 src={props.images[0].src}
                 width="190px"
@@ -154,23 +170,28 @@ export default function ItemCard(props) {
             item
             xs={12}
             sx={{
-              border: ".25rem solid #e86ca1",
-              borderRight: ".45rem solid #e86ca1",
-              borderLeft: ".45rem solid #e86ca1",
-              borderRadius: "6px",
+              // border: ".25rem solid #e86ca1",
+              // borderRight: ".45rem solid #e86ca1",
+              // borderLeft: ".45rem solid #e86ca1",
+              // borderRadius: "6px",
               minHeight: "115px",
               maxHeight: "115px",
-              overflowY: "scroll",
+              overflow: "hidden",
+              marginY: ".25rem"
+              // scrollbarColor: "green",
+              // scrollbarWidth: ".25rem"
             }}
           >
-            {props.tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
+            {props.tags.map(tag =>
+              <Tag key={tag}>
+                {tag}
+              </Tag>
+            )}
             <Typography
               variant="body2"
               color="text.secondary"
               sx={{
-                p: 1,
+                p: 1
               }}
             >
               {props.shortDescription}
@@ -185,15 +206,17 @@ export default function ItemCard(props) {
                 sx={{
                   p: "6px",
                   minHeight: "175px",
-                  maxHeight: "175px",
-                  backgroundColor: "#271d5a",
+                  maxHeight: "175px"
+                  /*backgroundColor: "#271d5a",*/
                 }}
               >
                 <TableBody>
                   <TableRow>
                     <TableCell variant="head">Retail Price</TableCell>
 
-                    <TableCell align="right">$ {props.price} USD</TableCell>
+                    <TableCell align="right">
+                      $ {props.price} USD
+                    </TableCell>
                   </TableRow>
 
                   <TableRow>
@@ -204,7 +227,7 @@ export default function ItemCard(props) {
                       <Select
                         labelId="currency-select-label"
                         id="currency-select"
-                        value={currency}
+                        value={props.currency || ""}
                         label="Currency"
                         onChange={handleChange}
                         variant="standard"
@@ -220,8 +243,10 @@ export default function ItemCard(props) {
                     </TableCell>
 
                     <TableCell>
-                      {currency ? "0.000000000000000000" : "Select A Currency"}{" "}
-                      {currency}
+                      {props.currency
+                        ? "0.000000000000000000"
+                        : "Select A Currency"}{" "}
+                      {props.currency}
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -232,33 +257,33 @@ export default function ItemCard(props) {
       </CardContent>
       <CardActions>
         <Grid container display={"flex"} alignItems={"center"}>
-          {showShare && (
+          {props.showShare &&
             <Grid item xs={12} textAlign="center">
-              https://here/?productId={props.id}
-            </Grid>
-          )}
+              http://shop.winston.services/?productId={props.id}
+            </Grid>}
           <Grid item xs={12}>
             <IconButton
               aria-label="add to favorites"
               onClick={() => {
-                props.handleCartMethods.favorites.indexOf(props.id) !== -1
-                  ? props.handleCartMethods.removeFromFavorites()
-                  : props.handleCartMethods.addToFavorites();
+                state.favorites.indexOf(props.id) !== -1
+                  ? dispatch({ type: "removeFromFavorites", payload: props.id })
+                  : dispatch({ type: "addToFavorites", payload: props.id });
               }}
             >
               <FavoriteIcon
                 sx={{
                   color:
-                    props.handleCartMethods.favorites.indexOf(props.id) !== -1
-                      ? "red"
-                      : "white",
+                    state.favorites.indexOf(props.id) !== -1 ? "red" : "white"
                 }}
               />
             </IconButton>
             <IconButton
               aria-label="share"
               onClick={() => {
-                setShowShare(!showShare);
+                dispatch({
+                  type: "setShowShare",
+                  payload: props.id
+                });
               }}
             >
               <ShareIcon />
@@ -266,42 +291,42 @@ export default function ItemCard(props) {
             <IconButton
               aria-label="add-to-cart"
               onClick={() => {
-                props.handleCartMethods.cartItems.indexOf(props.id) !== -1
-                  ? props.handleCartMethods.removeFromCart()
-                  : props.handleCartMethods.addToCart();
+                state.cartItems.indexOf(props.id) !== -1
+                  ? dispatch({ type: "removeFromCart", payload: props.id })
+                  : dispatch({ type: "addToCart", payload: props.id });
               }}
             >
               <AddShoppingCart
                 sx={{
                   color:
-                    props.handleCartMethods.cartItems.indexOf(props.id) !== -1
+                    state.cartItems.indexOf(props.id) !== -1
                       ? "#e454c4"
-                      : "white",
+                      : "white"
                 }}
               />
             </IconButton>
             <IconButton
               aria-label="add-to-wishlist"
               onClick={() => {
-                props.handleCartMethods.wishlist.indexOf(props.id) !== -1
-                  ? props.handleCartMethods.removeFromWishList()
-                  : props.handleCartMethods.addToWishList();
+                state.wishlist.indexOf(props.id) !== -1
+                  ? dispatch({ type: "removeFromWishList", payload: props.id })
+                  : dispatch({ type: "addToWishList", payload: props.id });
               }}
             >
               <PlusOne
                 sx={{
                   color:
-                    props.handleCartMethods.wishlist.indexOf(props.id) !== -1
+                    state.wishlist.indexOf(props.id) !== -1
                       ? "#e97793"
-                      : "white",
+                      : "white"
                 }}
               />
             </IconButton>
             <span style={{ float: "right" }}>
               <ExpandMore
-                expand={expanded}
+                expand={props.expanded}
                 onClick={handleExpandClick}
-                aria-expanded={expanded}
+                aria-expanded={props.expanded}
                 aria-label="show more"
               >
                 <ExpandMoreIcon />
@@ -310,14 +335,27 @@ export default function ItemCard(props) {
           </Grid>
         </Grid>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={props.expanded} timeout="auto" unmountOnExit>
         <CardContent
           sx={{
             borderRadius: "3px",
             minHeight: "400px",
             maxHeight: "400px",
-            overflowX: "scroll",
+            overflowX: "hidden",
+            overflowY: "thin",
             padding: "0px",
+            scrollbarColor: "red !important",
+            webkitScrollbar: {
+              width: "8px"
+            },
+            webkitScrollbarTrack: {
+              backgroundColor: "red !important",
+              borderRadius: "5px"
+            },
+            webkitScrollbarThumb: {
+              width: "5px",
+              backgroundColor: "green"
+            }
           }}
           m={2}
           component={Box}
@@ -328,12 +366,12 @@ export default function ItemCard(props) {
               color="info"
               variant="outlined"
               onClick={() => {
-                props.handleCartMethods.cartItems.indexOf(props.id) !== -1
-                  ? props.handleCartMethods.removeFromCart()
-                  : props.handleCartMethods.addToCart();
+                state.cartItems.indexOf(props.id) !== -1
+                  ? dispatch({ type: "removeFromCart", payload: props.id })
+                  : dispatch({ type: "addToCart", payload: props.id });
               }}
             >
-              {props.handleCartMethods.cartItems.indexOf(props.id) !== -1
+              {state.cartItems.indexOf(props.id) !== -1
                 ? "Remove From Cart"
                 : "Add To Cart"}
             </Button>{" "}
@@ -346,32 +384,23 @@ export default function ItemCard(props) {
             xs={12}
             sx={{
               marginBottom: "6px",
-              p: "16px",
-              borderRadius: "6px",
-              backgroundColor: "#b86dc9",
+              p: "8px",
+              borderRadius: "6px"
+              /* backgroundColor: "#b86dc9",*/
             }}
           >
-            <Typography paragraph>{props.description}</Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              p: "16px",
-              borderRadius: "6px 6px 0px 0px",
-              backgroundColor: "#aa69d9",
-            }}
-          >
-            <Typography component="subtitle">Cart Item Options</Typography>
+            <Typography paragraph>
+              {props.description}
+            </Typography>
           </Grid>
           <Grid
             item
             xs={12}
             sx={{
               marginBottom: "6px",
-              p: "16px",
+              m: "8px",
               borderRadius: "0px 0px 6px 6px",
-              backgroundColor: "#a266e3",
+              backgroundColor: "#a266e3"
             }}
           >
             <FullWidthTabs

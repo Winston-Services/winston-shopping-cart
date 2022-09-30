@@ -132,19 +132,19 @@ window.config = {
         "Consequat culpa voluptate Lorem dolore aliquip sit pariatur. In do tempor reprehenderit sint excepteur labore est duis cillum. Do excepteur anim dolore ad nostrud fugiat mollit nisi. Occaecat deserunt consequat minim minim Lorem magna ex laborum reprehenderit nulla irure cillum. Deserunt excepteur sit enim fugiat exercitation ullamco elit tempor qui nulla cillum. Minim laboris pariatur eiusmod et enim incididunt occaecat cupidatat sint reprehenderit qui. Est incididunt ex dolor in enim fugiat proident pariatur officia aliquip duis.",
       reviews: [
         {
-          comment: "Love the rewards",
-          commenterName: "",
-          commenterEmail: "",
+          comment: "What a wonderful product. You can't go wrong when you get one of these bottles. They last forever and a perfect for any trip.",
+          commenterName: "Geana Lopez",
+          commenterEmail: "glopez1944@domain.tld",
           rating: 5,
         },
         {
-          comment: "Love the rewards",
-          commenterName: "",
-          commenterEmail: "",
+          comment: "Blog burns fried pies.",
+          commenterName: "JoAnne Marie",
+          commenterEmail: "JoJoAM@domain.tld",
           rating: 3,
         },
         {
-          comment: "Can't get it to work.",
+          comment: "Orange Cat, Brown Cat, any Cat will do when you want to have a cat.",
           commenterName: "",
           commenterEmail: "",
           rating: 1,
