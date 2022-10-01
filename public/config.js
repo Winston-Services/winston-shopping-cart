@@ -4,13 +4,8 @@ var avatarImage =
 window.config = {
   host: window.location.origin.includes("localhost:")
     ? window.location.origin
-    : "https://api.winston.services",
-  scannerAPI:
-    "https://api.bscscan.com/api?module=contract&action=getabi&address={smartContractAddress}&apikey={apiKey}",
+    : "http://winston.services",
   apiKey: "HH5C3ZYPGVQUT8FIVNIJXGDHQPNXUEC89U",
-  launchTime: "2022-06-30",
-  launchDescription:
-    "Ever find yourself struggling to understand blockchain and cryptocurrency? Let Winston Services help you find answers to your most pressing questions about blockchain and cryptocurrency.",
   admin: ["0x4Af656BBbf30900bf433C4FB7f856D2B30Ee6Fd9"],
   copyright: "Copyright © 2022 M.A.D. Computer Consulting LLC",
   productList: [
@@ -320,7 +315,7 @@ window.config = {
       description:
         "Purchase your members role for the rickle server and link your account to get the role. This is a yearly membership and does not auto renew.",
       downloadable: true,
-      thumbnail: "",
+      thumbnail: avatarImage,
       images: [
         {
           src: "../assets/products/images/White_T_Gold_Logo.png",
@@ -416,7 +411,7 @@ window.config = {
       description:
         "Purchase your members role for the rickle server and link your account to get the role. This is a yearly membership and does not auto renew.",
       downloadable: true,
-      thumbnail: "",
+      thumbnail: avatarImage,
       images: [
         {
           src: "../assets/products/images/White_T_Blue_Logo.png",
@@ -510,7 +505,7 @@ window.config = {
       description:
         "Purchase your members role for the rickle server and link your account to get the role. This is a yearly membership and does not auto renew.",
       downloadable: true,
-      thumbnail: "",
+      thumbnail: avatarImage,
       images: [
         {
           src: "../assets/products/images/White_Blue_Beenie_Blue_Gold_Logo.png",
@@ -616,7 +611,7 @@ window.config = {
       description:
         "Purchase your members role for the rickle server and link your account to get the role. This is a yearly membership and does not auto renew.",
       downloadable: true,
-      thumbnail: "",
+      thumbnail: avatarImage,
       images: [
         {
           src: "../assets/products/images/White_Beenie_Blue_Logo.png",

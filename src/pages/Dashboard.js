@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { styled } from "@mui/material/styles";
 import {
   Button,
   CircularProgress,
@@ -7,264 +8,252 @@ import {
   Paper,
   TextField,
   Typography,
+  Card,
+  CardContent,
+  CardActions,
+  IconButton
 } from "@mui/material";
-
-import config from "../config";
-import ReCAPTCHA from "react-google-recaptcha";
-import { v4 } from "uuid";
-import ItemCard from "../components/ItemCard";
-import Logo from "../assets/logo.png";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { AddShoppingCart, PlusOne } from "@mui/icons-material";
+import { store } from "../store";
+import { Divider } from "@mui/material";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function Dashboard() {
-  const [email, setEmail] = useState("");
-  const [captcha, setCaptcha] = useState("");
-  const [isLeadLoading, setIsLeadLoading] = useState(false);
-  const [response, setResponse] = useState("");
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (captcha) {
-      setIsLeadLoading(true);
-      try {
-        /*
-        await apiInstance({
-          method: "POST",
-          path: "/users/lead",
-          body: {
-            email,
-            winstonPreregister: true,
-          },
-        });
-        */
-        setResponse({
-          isError: false,
-          msg: "Your request has been sent.",
-        });
-        setIsLeadLoading(false);
-      } catch (e) {
-        setResponse({
-          isError: true,
-          msg: "Your request has not been sent.",
-        });
-        setIsLeadLoading(false);
-      }
-    }
-  }
-
-  function onChange(value) {
-    setCaptcha(value);
-  }
-  const productIdNonce = new Set();
-  const getProductId = () => {
-    const id = v4();
-    if (productIdNonce.has(id)) return getProductId();
-    productIdNonce.add(id);
-    return id;
+  const appState = React.useContext(store);
+  const { state, dispatch } = appState;
+  const [expanded, setExpanded] = React.useState({
+    Settings: false,
+    Products: false,
+    Reports: false
+  });
+  const [visable, setVisable] = React.useState("Settings");
+  const [isMobile, setIsMobile] = React.useState(false);
+  const handleExpandClick = name => {
+    setExpanded({ ...expanded, [name]: !expanded[name] });
   };
-  const productList = [
-    {
-      id: getProductId(),
-      title: "Membership Role",
-      shortDescription: "Get a yearly membership role.",
-      description:
-        "Purchase your members role for the rickle server and link your account to get the role. This is a yearly membership and does not auto renew.",
-      downloadable: true,
-      thumbnail: Logo,
-      images: [{ src: Logo, alt: "Winston Services Placeholder" }],
-      category: "Subscriptions",
-      subcategory: "Membership",
-      overview:
-        "Consequat culpa voluptate Lorem dolore aliquip sit pariatur. In do tempor reprehenderit sint excepteur labore est duis cillum. Do excepteur anim dolore ad nostrud fugiat mollit nisi. Occaecat deserunt consequat minim minim Lorem magna ex laborum reprehenderit nulla irure cillum. Deserunt excepteur sit enim fugiat exercitation ullamco elit tempor qui nulla cillum. Minim laboris pariatur eiusmod et enim incididunt occaecat cupidatat sint reprehenderit qui. Est incididunt ex dolor in enim fugiat proident pariatur officia aliquip duis.",
-      reviews: [
-        {
-          comment: "Love the rewards",
-          commenterName: "Jane Mary",
-          commenterEmail: "",
-          rating: 5,
-        },
-        {
-          comment: "Love the rewards",
-          commenterName: "Jane Mary",
-          commenterEmail: "",
-          rating: 3,
-        },
-        {
-          comment: "Can't get it to work.",
-          commenterName: "Jane Mary",
-          commenterEmail: "",
-          rating: 1,
-        },
-        {
-          comment: "Love the rewards",
-          commenterName: "Jane Mary",
-          commenterEmail: "",
-          rating: 5,
-        },
-      ],
-      tags: ["subscriptions", "membership", "rickle"],
-      shipsFrom: {
-        address_1: "",
-        address_2: "",
-        address_3: "",
-        address_4: "",
-      },
-      manufactures: [
-        {
-          name: "",
-          address_1: "",
-          address_2: "",
-          address_3: "",
-          address_4: "",
-        },
-      ],
-      attributes: [{}],
-      options: [
-        {
-          isDefault: true,
-          name: "Duration",
-          type: "ChooseOne",
-          options: [
-            {
-              name: "Annual Members Role",
-              value: "annual",
-              label: "Annual Membership",
-              acceptCurrencies: [
-                "USDC",
-                "BNB",
-                "WBNB",
-                "BUSD",
-                "RICKLE",
-                "WINSTON",
-              ],
-              price: "1.00",
-              priceInUSD: "1.00",
-            },
-            {
-              name: "Trial Members Role",
-              value: "trial",
-              label: "Trial Membership",
-              acceptCurrencies: ["RICKLE", "WINSTON"],
-              price: "1.60",
-              priceInUSD: "1.60",
-            },
-          ],
-        },
-      ],
-    },
-  ];
-  return (
-    <>
-      {true ? (
-        <Container sx={{ mt: "100px" }}>
-          <Grid container display={"flex"} justifyContent={"center"}>
-            {Array(12).fill(productList[0]).map((p) => {
-                p.id = getProductId();
-                return p;
-              })
-              .map((product) => (
-                <Grid item sm={12} md={4} key={product.id}>
-                  <Paper color="secondary" sx={{ p: ".25rem" }}>
-                    <ItemCard
-                      handleCartMethods={() => {
-                        return { method_1: () => {}, method_2: () => {} };
-                      }}
-                      {...product}
-                    />
-                  </Paper>
-                </Grid>
-              ))}
-          </Grid>
-        </Container>
-      ) : (
-        <Container sx={{ mt: "100px" }}>
-          <Grid container display={"flex"} alignItems={"center"}>
-            <Grid item md={4}>
-              Test Area Two
-            </Grid>
-            <Grid item md={8}>
-              <Typography variant="h4">Coming soon</Typography>
-              <Typography variant="subtitle2" mt={2}>
-                {config.launchDescription}
-              </Typography>
-              <Grid container spacing={3}>
-                <Grid item mt="50px">
-                  <Paper color="secondary" sx={{ p: 2 }}>
-                    <Typography fontSize={96} fontWeight={300}></Typography>
-                  </Paper>
-                  <Paper color="secondary" sx={{ py: 1, mt: "5px" }}>
-                    <Typography variant="subtitle1" textAlign={"center"}>
-                      Days left
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item mt="50px">
-                  <Paper color="secondary" sx={{ p: 2 }}>
-                    <Typography fontSize={96} fontWeight={300}></Typography>
-                  </Paper>
-                  <Paper color="secondary" sx={{ py: 1, mt: "5px" }}>
-                    <Typography variant="subtitle1" textAlign={"center"}>
-                      Hours left
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item mt="50px">
-                  <Paper color="secondary" sx={{ p: 2 }}>
-                    <Typography fontSize={96} fontWeight={300}></Typography>
-                  </Paper>
-                  <Paper color="secondary" sx={{ py: 1, mt: "5px" }}>
-                    <Typography variant="subtitle1" textAlign={"center"}>
-                      Minutes left
-                    </Typography>
-                  </Paper>
-                </Grid>
-              </Grid>
 
-              {response && !response.isError ? (
-                <Typography variant="h6" mt={"100px"} mb={2}>
-                  Your request has been submitted.
-                </Typography>
-              ) : (
-                <form onSubmit={(e) => handleSubmit(e)}>
-                  <Typography variant="h6" mt={"100px"} mb={2}>
-                    Get notified when we launch
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    type={"email"}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    label="Email address"
-                    variant="outlined"
-                    placeholder="Enter email address"
-                    disabled={isLeadLoading}
-                    helperText={response.msg}
-                    error={response.isError}
-                    required
-                  />
-                  <Grid mt={3}>
-                    <ReCAPTCHA
-                      sitekey="6LdF4tkfAAAAAIlIBwHPLAH6oU9jtVIRB8Cn5FO9"
-                      onChange={onChange}
-                    />
-                  </Grid>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    sx={{ mt: "30px" }}
-                    disabled={!captcha || isLeadLoading}
+  const ExpandMore = styled(props => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} name={expand} />;
+  })(({ theme, expand }) => ({
+    transform: !expanded[expand] ? "rotate(0deg)" : "rotate(180deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest
+    })
+  }));
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const setScreenState = React.useCallback((matches) => {
+    setIsMobile(matches);
+  }, [setIsMobile])
+  
+  
+  React.useLayoutEffect(() => setScreenState(matches));
+  return (
+    <Container sx={{ mt: "100px" }}>
+      <Grid container display={"flex"} justifyContent={"center"}>
+        <Grid item xs={12}>
+          <Paper
+            color="secondary"
+            sx={{ m: ".25rem", p: ".25rem", minHeight: "60vh" }}
+          >
+            <Grid
+              container
+              display={"flex"}
+              justifyContent={"left"}
+              spacing={1}
+            >
+              <Grid item xs={12} md={3}>
+                {["Settings", "Products", "Reports"].map(menuItem =>
+                  <Card
+                    sx={{
+                      borderRadius: "6px",
+                      margin: "0.25rem",
+                      paddingY: ".75rem"
+                    }}
+                    elevation={2}
                   >
-                    {isLeadLoading ? (
-                      <CircularProgress size={24} sx={{ mr: 2 }} />
-                    ) : null}
-                    Submit
-                  </Button>
-                </form>
-              )}
+                    <CardActions>
+                      <Grid container display={"flex"} alignItems={"center"}>
+                        <Grid item xs={12}>
+                          <IconButton
+                            aria-label="add to favorites"
+                            onClick={() => {
+                              dispatch({
+                                type: "addToFavorites",
+                                payload: {}
+                              });
+                            }}
+                          >
+                            🗣️
+                          </IconButton>
+                          <IconButton
+                            aria-label="share"
+                            onClick={() => {
+                              dispatch({
+                                type: "setShowShare",
+                                payload: {}
+                              });
+                            }}
+                          >
+                            <ShareIcon />
+                          </IconButton>
+                          <IconButton
+                            aria-label="add-to-cart"
+                            onClick={() => {
+                              dispatch({
+                                type: "addToCart",
+                                payload: {}
+                              });
+                            }}
+                          >
+                            📭 📬
+                          </IconButton>
+                          <IconButton
+                            aria-label="add-to-wishlist"
+                            onClick={() => {
+                              dispatch({
+                                type: "addToWishList",
+                                payload: {}
+                              });
+                            }}
+                          >
+                            <PlusOne
+                              sx={{
+                                color: "white"
+                              }}
+                            />
+                          </IconButton>
+                          <span style={{ float: "right" }}>
+                            <ExpandMore
+                              expand={menuItem}
+                              name={menuItem}
+                              onClick={e => {
+                                e.preventDefault();
+                                handleExpandClick(menuItem);
+                              }}
+                              aria-expanded={expanded[menuItem]}
+                              aria-label="show more"
+                            >
+                              <ExpandMoreIcon name={menuItem} />
+                            </ExpandMore>
+                          </span>
+                        </Grid>
+                      </Grid>
+                    </CardActions>
+                    <CardContent>
+                      {menuItem}
+                      <span
+                        style={{ float: "right" }}
+                        onClick={() => {
+                          setVisable(menuItem);
+                        }}
+                      >
+                        {visable === menuItem ? isMobile ? "➡️" : "⬇️" : "👁️"}
+                      </span>
+                    </CardContent>
+                  </Card>
+                )}
+              </Grid>
+              <Grid item xs={12} md={9}>
+                <Card
+                  sx={{
+                    borderRadius: "6px",
+                    marginY: ".25rem",
+                    height: "100%"
+                  }}
+                  elevation={3}
+                >
+                  <CardContent>
+                    <Typography component="h2" variant="title">
+                      Settings
+                    </Typography>
+                    <Divider />
+                    <Typography variant="body1">
+                      Manage your cart preferences and settings.
+                    </Typography>
+                    <Typography component="h3" variant="title">
+                      General Settings
+                    </Typography>
+                    <Divider />
+                    <Typography component="h3" variant="title">
+                      Language Settings
+                    </Typography>
+                    <Divider />
+                    Primary Language: English US en_US
+                    <Typography component="h3" variant="title">
+                      Site Metadata
+                    </Typography>
+                    <Divider />
+                    Title: "" Description: "", keywords: "" Copyright :
+                    <Typography component="h3" variant="title">
+                      Checkout Settings
+                    </Typography>
+                    <Divider />
+                    {`
+                    paymentTypes: ["crypto", "credit-card"],
+    cryptoPaymentAddress: { bnb: "", eth: "", polygon: "", xdai: "" },
+    paymentCurrencies: [
+      {
+        type: "credit-card",
+        network: "nmi",
+        currency: ["USD", "CAD"],
+      },
+      {
+        type: "crypto",
+        network: "bnb",
+        currency: ["BNB", "BUSD", "USDC", "USDT", "RKL", "WIN"],
+      },
+      {
+        type: "crypto",
+        network: "eth",
+        currency: ["ETH", "USDC", "RKL"],
+      },
+      {
+        type: "crypto",
+        network: "polygon",
+        currency: ["MATIC", "USDC", "MIMATIC", "RKL"],
+      },
+      {
+        type: "crypto",
+        network: "xdai",
+        currency: ["XDAI", "USDC", "RKL"],
+      },
+    ],
+    defaultPaymentCurrency: {
+      type: "crypto",
+      network: "bnb",
+      currency: "WIN",
+    },
+    termsAndConditions: "https://gist.com/ugedkig",`}
+                    <Typography component="h3" variant="title">
+                      Storage Settings
+                    </Typography>
+                    <Divider />
+                    *Product Listing Options Use Github For Product List Use API
+                    For Product List Use Winston For Product List Use Config
+                    File for Product List
+                    <Typography component="h3" variant="title">
+                      Blockchain API Settings
+                    </Typography>
+                    <Divider />
+                    <Typography component="h3" variant="title">
+                      Wallet Settings
+                    </Typography>
+                    <Divider />
+                  </CardContent>
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
-      )}
-    </>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }

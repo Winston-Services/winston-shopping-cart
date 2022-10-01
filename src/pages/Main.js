@@ -228,7 +228,9 @@ export default function Main() {
             <CircularProgress />
           </Box>
         }
-      />
+      >
+      <ReviewCart />
+      </Suspense>
     ),
     1: (
       <Suspense

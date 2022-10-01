@@ -80,7 +80,12 @@ export default function ItemCard(props) {
       }
     });
   };
-
+  const categoryColors = {
+    Ho: "#82c6b6",
+    Sp: "#c69382",
+    Cl: "#b2c682",
+    El: "#92c682",
+  };
   return (
     <Card sx={{ borderRadius: "6px", width: "100%" }}>
       <CardHeader
@@ -89,14 +94,15 @@ export default function ItemCard(props) {
           <Avatar
             sx={{
               bgcolor: "transparent",
-              // border: ".05rem dashed #e453c6",
+              border: ".05rem solid #e453c6",
               padding: "1rem",
               width: "56px",
-              height: "56px"
+              height: "56px",
+              color: categoryColors[props.category.substring(0,2)]
             }}
             aria-label="category_brand_logo"
           >
-            <img src={props.thumbnail} width="42px" alt="Product Thumbnail" />
+            {props.category.substring(0,2)}
           </Avatar>
         }
         action={
