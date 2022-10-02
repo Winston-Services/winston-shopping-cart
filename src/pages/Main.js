@@ -21,6 +21,7 @@ import ConfirmPayment from "../pages/cart/ConfirmPayment";
 import ProcessPayment from "../pages/cart/ProcessPayment";
 import { store } from "../store";
 import { ItemListDisplay } from "./cart/ItemListDisplay";
+import { Skeleton } from "@mui/material";
 
 let productList = config.productList;
 export default function Main() {
@@ -125,7 +126,12 @@ export default function Main() {
         <Container sx={{ mt: "100px" }}>
           <Grid container display={"flex"} alignItems={"center"}>
             <Grid item md={4}>
-              Test Area Two
+              <Skeleton
+                animation="wave"
+                variant="rounded"
+                width={40}
+                height={40}
+              />
             </Grid>
             <Grid item md={8}>
               <Typography variant="h4">Coming soon</Typography>
