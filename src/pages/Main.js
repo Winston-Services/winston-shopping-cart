@@ -1,4 +1,4 @@
-import React, { useState, Suspense, createContext } from "react";
+import React, { Suspense } from "react";
 import {
   Box,
   Button,
@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 
 import config from "../config";
-import ItemCard from "../components/ItemCard";
 import CaptchaComponent from "./CaptchaComponent";
 import ReviewCart from "../pages/cart/ReviewCart";
 import AgreeToTerms from "../pages/cart/AgreeToTerms";
@@ -21,6 +20,7 @@ import SelectPaymentMethod from "../pages/cart/SelectPaymentMethod";
 import ConfirmPayment from "../pages/cart/ConfirmPayment";
 import ProcessPayment from "../pages/cart/ProcessPayment";
 import { store } from "../store";
+import { ItemListDisplay } from "./cart/ItemListDisplay";
 
 let productList = config.productList;
 export default function Main() {
@@ -228,7 +228,9 @@ export default function Main() {
             <CircularProgress />
           </Box>
         }
-      />
+      >
+        <ReviewCart />
+      </Suspense>
     ),
     1: (
       <Suspense
@@ -349,36 +351,6 @@ export default function Main() {
         <ProcessPayment />
       </Suspense>
     )
-  };
-
-  const ItemListDisplay = () => {
-    return (
-      <Suspense
-        fallback={
-          <Box
-            display="flex"
-            justifyContent={"center"}
-            alignItems="center"
-            height={"100%"}
-            minHeight="100%"
-          >
-            <CircularProgress />
-          </Box>
-        }
-      >
-        <Container sx={{ mt: "100px" }}>
-          <Grid container display={"flex"} spacing={1}>
-            {state.items.map(product =>
-              <Grid item xs={12} md={4} key={product.id}>
-                <Paper color="secondary" sx={{ p: ".15rem" }}>
-                  <ItemCard {...product} />
-                </Paper>
-              </Grid>
-            )}
-          </Grid>
-        </Container>
-      </Suspense>
-    );
   };
 
   if (state.showCheckoutStep) {
