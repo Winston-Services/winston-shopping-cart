@@ -4,8 +4,6 @@ import ItemCard from "../../components/ItemCard";
 import { store } from "../../store";
 import { Select } from "@mui/material";
 import { Typography } from "@mui/material";
-import { Input } from "@mui/material";
-import { InputLabel } from "@mui/material";
 import { TextField } from "@mui/material";
 import { IconButton } from "@mui/material";
 import { Icon } from "@mui/material";
@@ -38,7 +36,7 @@ export function ItemListDisplay() {
               >
                 <Box margin={0.75}>
                   <Grid item xs={12} spacing={3}>
-                    Filter {"  "}
+                    Sort | Filter {"  "}
                     <Select
                       sx={{ marginRight: "8px", marginLeft: "16px" }}
                       value="Category"
