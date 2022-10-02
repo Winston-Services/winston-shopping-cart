@@ -8,10 +8,8 @@ import { store } from "./store";
 
 const MainComponent = React.lazy(() => import("./pages/Main"));
 const SetupComponent = React.lazy(() => import("./pages/setup"));
-const SignInComponent = React.lazy(() => import("./pages/setup"));
-const DashboardComponent = React.lazy(() => import("./pages/Dashboard"));
-
-
+const SignInComponent = React.lazy(() => import("./pages/signin"));
+const DashboardComponent = React.lazy(() => import("./pages/dashboard"));
 
 function App() {
   const appState = React.useContext(store);
@@ -21,29 +19,27 @@ function App() {
     let active = true;
     if (active) {
       if (state.socketClient === undefined) {
-        
-          dispatch({
-            type: "connect",
-            section: "connection",
-          });
-        
+        dispatch({
+          type: "connect",
+          section: "connection"
+        });
+
         if (state.socketClient) {
-          state.socketClient.on("connected", (client) => {
+          state.socketClient.on("connected", client => {
             dispatch({
               type: "socketConnected",
               section: "connection",
-              payload: client,
+              payload: client
             });
           });
         }
-        
       }
     }
     return () => {
       active = false;
     };
   });
-  
+
   return (
     <Routes>
       <Route path="/dashboard" element={<DashboardPageLayout />}>
@@ -70,9 +66,68 @@ function App() {
       </Route>
       <Route path="/" element={<PublicPageLayout />}>
         <Route path="/" element={<MainComponent />} />
-        {config.admin.length !== 0
-          ? <Route path="/setup" element={<SetupComponent />} />
-          : <Route path="/sign-in" element={<SignInComponent />} />}
+        {config.admin.length === 0
+          ? <Route
+              path="/setup"
+              element={
+                <Suspense
+                  fallback={
+                    <Box
+                      display="flex"
+                      justifyContent={"center"}
+                      alignItems="center"
+                      height={"100vh"}
+                      minHeight="100%"
+                    >
+                      <CircularProgress color="info" />
+                    </Box>
+                  }
+                >
+                  <SetupComponent />
+                </Suspense>
+              }
+            />
+          : <Route
+              path="/sign-in"
+              element={
+                <Suspense
+                  fallback={
+                    <Box
+                      display="flex"
+                      justifyContent={"center"}
+                      alignItems="center"
+                      height={"100vh"}
+                      minHeight="100%"
+                    >
+                      <CircularProgress  color="info"/>
+                    </Box>
+                  }
+                >
+                  <SignInComponent />
+                </Suspense>
+              }
+            />}
+
+        {config.admin.length !== 0 && <Route
+              path="/sign-up"
+              element={
+                <Suspense
+                  fallback={
+                    <Box
+                      display="flex"
+                      justifyContent={"center"}
+                      alignItems="center"
+                      height={"100vh"}
+                      minHeight="100%"
+                    >
+                      <CircularProgress  color="info"/>
+                    </Box>
+                  }
+                >
+                  <SignInComponent register/>
+                </Suspense>
+              }
+            />}   
       </Route>
       <Route path="*" element={<Navigate to={"/"} />} />
     </Routes>

@@ -7,9 +7,10 @@ import { store } from "../../store";
 
 function Header() {
   const navigate = useNavigate();
-  
+
   const appState = React.useContext(store);
   const { state, dispatch } = appState;
+  const { authenticated, cartItems } = state;
   return (
     <Grid className="landingInGradient" py={2}>
       <Container>
@@ -28,16 +29,53 @@ function Header() {
             />
           </Grid>
           <Grid>
-            {config.admin.length >= 1 ? (<React.Fragment>
-              <Button onClick={() => navigate("/sign-in")}>Products</Button>
-              <Button onClick={() => navigate("/sign-in")}>Wishlist</Button>
-              <Button onClick={() => navigate("/sign-in")}>Checkout</Button>
-              <Button onClick={() => navigate("/sign-in")}>Sign-In</Button>
-
-            </React.Fragment>
-            ) : (
-              <Button onClick={() => navigate("/setup")}>Setup</Button>
-            )}
+            {config.admin.length >= 1
+              ? <React.Fragment>
+                  {cartItems.length !== 0 &&
+                    <Button
+                      onClick={() => {
+                        dispatch({
+                          type: "setCheckoutDisplayStep",
+                          payload: 1
+                        });
+                        return navigate("/");
+                      }}
+                    >
+                      Checkout
+                    </Button>}
+                  {!authenticated &&
+                    <Button onClick={() => navigate("/sign-in")}>
+                      Sign-In
+                    </Button>}
+                  <Button
+                    onClick={() => {
+                      dispatch({
+                        type: "setCheckoutDisplayStep",
+                        payload: 0
+                      });
+                      dispatch({
+                        type: "setItemGridDisplay",
+                        payload: true
+                      });
+                      return navigate("/");
+                    }}
+                  >
+                    Products
+                  </Button>
+                  {authenticated &&
+                    <React.Fragment>
+                      <Button onClick={() => navigate("/wishlist")}>
+                        Wishlist
+                      </Button>
+                      <Button onClick={() => navigate("/dashboard")}>
+                        Dashboard
+                      </Button>
+                      <Button onClick={() => navigate("/sign-in")}>
+                        Sign-Out
+                      </Button>
+                    </React.Fragment>}
+                </React.Fragment>
+              : <Button onClick={() => navigate("/setup")}>Setup</Button>}
           </Grid>
         </Grid>
       </Container>
