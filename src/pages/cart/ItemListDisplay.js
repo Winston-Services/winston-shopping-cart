@@ -7,10 +7,94 @@ import { Typography } from "@mui/material";
 import { TextField } from "@mui/material";
 import { IconButton } from "@mui/material";
 import { Icon } from "@mui/material";
+import { Button } from "@mui/material";
+import { MenuItem } from "@mui/material";
+const categoryOptions = [
+  {
+    key: "Category",
+    value: "Category"
+  },
+  {
+    key: "Sports Gear",
+    value: "Sports Gear"
+  },
+  {
+    key: "Houseware",
+    value: "Houseware"
+  },
+  {
+    key: "Clothing",
+    value: "Clothing"
+  },
+  {
+    key: "Electronics",
+    value: "Electronics"
+  }
+];
 
+const subCategoryOptions = [
+  {
+    key: "Subcategory",
+    value: "Subcategory"
+  },
+  {
+    key: "Water Bottles",
+    value: "Water Bottles"
+  },
+  {
+    key: "Blankets",
+    value: "Blankets"
+  },
+  {
+    key: "T-Shirts",
+    value: "T-Shirts"
+  },
+  {
+    key: "Beenie's",
+    value: "Beenie's"
+  }
+];
+const pageOptionsBar = {
+  Filter: {
+    Select: [
+      {
+        value: "Category",
+        placeholder: "Category",
+        id: "Category-filter",
+        options: [...categoryOptions]
+      },
+      {
+        value: "Subcategory",
+        placeholder: "Subcategory",
+        id: "subcategory-filter",
+        options: [...subCategoryOptions]
+      }
+    ]
+  },
+  Sort: {
+    Select: [
+      {
+        value: "Category",
+        placeholder: "Category",
+        id: "Category-sort",
+        options: [...categoryOptions]
+      },
+      {
+        value: "Subcategory",
+        placeholder: "Subcategory",
+        id: "subcategory-sort",
+        options: [...subCategoryOptions]
+      }
+    ]
+  }
+};
 export function ItemListDisplay() {
   const appState = React.useContext(store);
   const { state, dispatch } = appState;
+  const handlepageOptionsBarChange = (id, value) => {
+    console.log(id, value);
+    pageOptionsBar[state.page.options].Select[id].value = value;
+  };
   return (
     <Suspense
       fallback={
@@ -35,33 +119,56 @@ export function ItemListDisplay() {
                 elevation={6}
               >
                 <Box margin={0.75}>
-                  <Grid item xs={12} spacing={3}>
-                    Sort | Filter {"  "}
+                  <Grid item xs={12}>
+                    <Button
+                      onClick={() => {
+                        dispatch({
+                          type: "togglePageOptionsBar",
+                          payload:
+                            state.page.options === "Filter" ? "Sort" : "Filter"
+                        });
+                      }}
+                    >
+                      {state.page.options}
+                    </Button>
+                    {"  "}
                     <Select
                       sx={{ marginRight: "8px", marginLeft: "16px" }}
-                      value="Category"
-                      placeholder="Category"
-                      id="category-filter"
+                      defaultValue={
+                        pageOptionsBar[state.page.options].Select[0].value
+                      }
+                      placeholder={
+                        pageOptionsBar[state.page.options].Select[0].placeholder
+                      }
+                      onChange={e =>
+                        handlepageOptionsBarChange(0, e.target.value)}
+                      id={pageOptionsBar[state.page.options].Select[0].id}
                       variant="outlined"
                     >
-                      <option value="Category">Category</option>
-                      <option value="Sports Gear">Sports Gear</option>
-                      <option value="Houseware">Houseware</option>
-                      <option value="Clothing">Clothing</option>
-                      <option value="Electronics">Electronics</option>
+                      <MenuItem value="Category">Category</MenuItem>
+                      <MenuItem value="Sports">Sports Gear</MenuItem>
+                      <MenuItem value="Houseware">Houseware</MenuItem>
+                      <MenuItem value="Clothing">Clothing</MenuItem>
+                      <MenuItem value="Electronics">Electronics</MenuItem>
                     </Select>
                     <Select
                       sx={{ marginX: "8px" }}
-                      value="Subcategory"
-                      placeholder="Subcategory"
-                      id="subcategory-filter"
+                      defaultValue={
+                        pageOptionsBar[state.page.options].Select[1].value
+                      }
+                      placeholder={
+                        pageOptionsBar[state.page.options].Select[1].placeholder
+                      }
+                      onChange={e =>
+                        handlepageOptionsBarChange(1, e.target.value)}
+                      id={pageOptionsBar[state.page.options].Select[1].id}
                       variant="outlined"
                     >
-                      <option value="Subcategory">Subcategory</option>
-                      <option value="Water Bottles">Water Bottles</option>
-                      <option value="Blankets">Blankets</option>
-                      <option value="T-Shirts">T-Shirts</option>
-                      <option value="Beenie's">Beenie's</option>
+                      <MenuItem value="Subcategory">Subcategory</MenuItem>
+                      <MenuItem value="Water Bottles">Water Bottles</MenuItem>
+                      <MenuItem value="Blankets">Blankets</MenuItem>
+                      <MenuItem value="T-Shirts">T-Shirts</MenuItem>
+                      <MenuItem value="Beenie's">Beenie's</MenuItem>
                     </Select>
                     <TextField
                       sx={{ marginX: "8px" }}
@@ -71,15 +178,19 @@ export function ItemListDisplay() {
                     />
                     <TextField
                       sx={{ marginX: "8px" }}
-                      name="Tags"
-                      placeholder="Tags ie: sports"
+                      name="Search"
+                      placeholder="Search ie: Winston Winter Fleece"
                       variant="outlined"
                     />
-                    <span style={{ float: "right", marginTop: "6px" }}>
-                      <IconButton size="large">
-                        <Icon>shopping_cart</Icon>
-                      </IconButton>
-                    </span>
+                    <IconButton size="large">
+                      <Icon>close</Icon>
+                    </IconButton>
+                    {state.cartItems.length !== 0 &&
+                      <span style={{ float: "right", marginTop: "6px" }}>
+                        <IconButton size="large">
+                          <Icon>shopping_cart</Icon>
+                        </IconButton>
+                      </span>}
                   </Grid>
                 </Box>
               </Paper>

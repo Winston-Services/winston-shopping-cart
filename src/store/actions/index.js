@@ -26,6 +26,7 @@ import { setCurrency } from "./setCurrency";
 import { setShowShare } from "./setShowShare";
 import { addToCart } from "./addToCart";
 import { removeFromCart } from "./removeFromCart";
+import { togglePageOptionsBar } from "./togglePageOptionsBar";
 
 export const actions = {
   firstName,
@@ -55,5 +56,6 @@ export const actions = {
   addToWishList,
   removeFromWishList,
   addToCart,
-  removeFromCart
+  removeFromCart,
+  togglePageOptionsBar
 };

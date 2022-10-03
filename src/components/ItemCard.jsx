@@ -64,7 +64,7 @@ export default function ItemCard(props) {
   const handleExpandClick = () => {
     dispatch({
       type: "setExpanded",
-      payload: { 
+      payload: {
         item: props.id,
         expanded: props.expanded
       }
@@ -84,7 +84,7 @@ export default function ItemCard(props) {
     Ho: "#82c6b6",
     Sp: "#c69382",
     Cl: "#b2c682",
-    El: "#92c682",
+    El: "#92c682"
   };
   return (
     <Card sx={{ borderRadius: "6px", width: "100%" }}>
@@ -98,11 +98,11 @@ export default function ItemCard(props) {
               padding: "1rem",
               width: "56px",
               height: "56px",
-              color: categoryColors[props.category.substring(0,2)]
+              color: categoryColors[props.category.substring(0, 2)]
             }}
             aria-label="category_brand_logo"
           >
-            {props.category.substring(0,2)}
+            {props.category.substring(0, 2)}
           </Avatar>
         }
         action={
@@ -161,58 +161,54 @@ export default function ItemCard(props) {
       <CardContent sx={{ paddingY: "3px", paddingX: "16px" }}>
         <Grid container alignItems={"center"}>
           <Grid item xs={12} textAlign="center">
-            <Paper color="secondary" sx={{ p: 2 }} align="center" elevation={3}>
+            <Paper
+              color="secondary"
+              sx={{ p: 2 }}
+              align="center"
+              elevation={3}
+              onClick={() => {
+                dispatch({
+                  type: "showProductItemDisplay",
+                  payload: {
+                    item: props.id,
+                    showItemGridDisplay: !state.showItemGridDisplay
+                  }
+                });
+              }}
+            >
               <img
                 src={props.images[0].src}
                 width="190px"
                 height="193.15px"
                 alt={props.images[0].alt}
+                className="productImage"
               />
             </Paper>
           </Grid>
         </Grid>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            p: 1,
+            overflow: "hidden",
+            minHeight: "60px"
+          }}
+        >
+          {props.shortDescription}
+        </Typography>
+        {ProductItemTags(props)}
+
         <Grid container display={"flex"} alignItems={"center"}>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              // border: ".25rem solid #e86ca1",
-              // borderRight: ".45rem solid #e86ca1",
-              // borderLeft: ".45rem solid #e86ca1",
-              // borderRadius: "6px",
-              minHeight: "115px",
-              maxHeight: "115px",
-              overflow: "hidden",
-              marginY: ".25rem"
-              // scrollbarColor: "green",
-              // scrollbarWidth: ".25rem"
-            }}
-          >
-            {props.tags.map(tag =>
-              <Tag key={tag}>
-                {tag}
-              </Tag>
-            )}
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                p: 1
-              }}
-            >
-              {props.shortDescription}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container display={"flex"} alignItems={"center"}>
-          <Grid item xs={12} textAlign="center">
+          <Grid item xs={12} justifyContent="center" textAlign="center">
             <Paper color="secondary" sx={{ p: ".09rem" }}>
               <Table
                 size="small"
                 sx={{
                   p: "6px",
                   minHeight: "175px",
-                  maxHeight: "175px"
+                  maxHeight: "175px",
+                  width: "100%"
                   /*backgroundColor: "#271d5a",*/
                 }}
               >
@@ -226,7 +222,7 @@ export default function ItemCard(props) {
                   </TableRow>
 
                   <TableRow>
-                    <TableCell variant="head">
+                    <TableCell variant="head" colSpan={2}>
                       <InputLabel id="currency-select-label">
                         Currency
                       </InputLabel>
@@ -247,14 +243,13 @@ export default function ItemCard(props) {
                         <MenuItem value="RKL">RKL</MenuItem>
                       </Select>
                     </TableCell>
-
-                    <TableCell>
-                      {props.currency
-                        ? "0.000000000000000000"
-                        : "Select A Currency"}{" "}
-                      {props.currency}
-                    </TableCell>
                   </TableRow>
+                  {props.currency &&
+                    <TableRow>
+                      <TableCell colSpan={2}>
+                        0.000000000000000000 {props.currency}
+                      </TableCell>
+                    </TableRow>}
                 </TableBody>
               </Table>
             </Paper>
@@ -418,5 +413,27 @@ export default function ItemCard(props) {
         </CardContent>
       </Collapse>
     </Card>
+  );
+}
+function ProductItemTags(props) {
+  return (
+    <Grid container display={"flex"} alignItems={"center"}>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          maxHeight: "115px",
+          overflow: "hidden",
+          marginY: ".25rem",
+          paddingX: "8px"
+        }}
+      >
+        {props.tags.map(tag =>
+          <Tag key={tag}>
+            {tag}
+          </Tag>
+        )}
+      </Grid>
+    </Grid>
   );
 }

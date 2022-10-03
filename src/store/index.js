@@ -8,6 +8,9 @@ import React, { createContext, useReducer } from "react";
 import { actions } from "./actions";
 
 export const initialState = {
+  page: {
+    options: "Filter"
+  },
   showItemGridDisplay: true,
   showCheckoutStep: 0,
   showProductDisplayItem: null,
@@ -19,7 +22,8 @@ export const initialState = {
   items: [],
   favorites: [],
   wishlist: [],
-  cartItems: []
+  cartItems: [],
+  authenticated: true
 };
 
 export const init = () => {

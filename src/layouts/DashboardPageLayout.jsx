@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, CircularProgress } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Header from "./common/Header";
 
@@ -9,7 +9,21 @@ function DashboardPageLayout() {
     <Box>
       <Header />
       <Box sx={{ minHeight: "calc(100vh - 350px) ", height: "100%" }}>
-        <Outlet />
+        <Suspense
+          fallback={
+            <Box
+              display="flex"
+              justifyContent={"center"}
+              alignItems="center"
+              height={"100%"}
+              minHeight="100%"
+            >
+              <CircularProgress />
+            </Box>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </Box>
       <Container sx={{ my: 4 }}>
         <Grid
