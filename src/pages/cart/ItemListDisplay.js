@@ -145,11 +145,13 @@ export function ItemListDisplay() {
                       id={pageOptionsBar[state.page.options].Select[0].id}
                       variant="outlined"
                     >
-                      <MenuItem value="Category">Category</MenuItem>
-                      <MenuItem value="Sports">Sports Gear</MenuItem>
-                      <MenuItem value="Houseware">Houseware</MenuItem>
-                      <MenuItem value="Clothing">Clothing</MenuItem>
-                      <MenuItem value="Electronics">Electronics</MenuItem>
+                      {pageOptionsBar[
+                        state.page.options
+                      ].Select[0].options.map(option =>
+                        <MenuItem value={option.value} key={state.page.options + "_" + option.key}>
+                          {option.key}
+                        </MenuItem>
+                      )}
                     </Select>
                     <Select
                       sx={{ marginX: "8px" }}
@@ -164,11 +166,13 @@ export function ItemListDisplay() {
                       id={pageOptionsBar[state.page.options].Select[1].id}
                       variant="outlined"
                     >
-                      <MenuItem value="Subcategory">Subcategory</MenuItem>
-                      <MenuItem value="Water Bottles">Water Bottles</MenuItem>
-                      <MenuItem value="Blankets">Blankets</MenuItem>
-                      <MenuItem value="T-Shirts">T-Shirts</MenuItem>
-                      <MenuItem value="Beenie's">Beenie's</MenuItem>
+                      {pageOptionsBar[
+                        state.page.options
+                      ].Select[1].options.map(option =>
+                        <MenuItem value={option.value} key={state.page.options + "_" +option.key}>
+                          {option.key}
+                        </MenuItem>
+                      )}
                     </Select>
                     <TextField
                       sx={{ marginX: "8px" }}

@@ -8,34 +8,35 @@ import {
   ListItemText,
   Grid
 } from "@mui/material";
+import { Skeleton } from "@mui/material";
 
 const users = [
   {
-    image: "./assets/user.png",
+    image: "",
     name: "Michael Dennis",
     designation: "Project Manager",
     rank: "1"
   },
   {
-    image: "./assets/user.png",
+    image: "",
     name: "Michael Dennis",
     designation: "Project Manager",
     rank: "2"
   },
   {
-    image: "./assets/user.png",
+    image: "",
     name: "Michael Dennis",
     designation: "Project Manager",
     rank: "3"
   },
   {
-    image: "./assets/user.png",
+    image: "",
     name: "Michael Dennis",
     designation: "Project Manager",
     rank: "4"
   },
   {
-    image: "./assets/user.png",
+    image: "",
     name: "Michael Dennis",
     designation: "Project Manager",
     rank: "5"
@@ -77,12 +78,16 @@ export default function TopUsers() {
               }
             >
               <ListItemIcon>
-                <img
-                  src={"./assets/user.png"}
-                  height="36"
-                  width="36"
-                  alt="Top users"
-                />
+                {user.image !== ""
+                  ? <img
+                      style={{
+                        width: 36,
+                        height: 36
+                      }}
+                      alt={user.image}
+                      src={user.name}
+                    />
+                  : <Skeleton variant="circular" width={36} height={36} />}
               </ListItemIcon>
               <ListItemText primary={user.name} secondary={user.designation} />
             </ListItem>

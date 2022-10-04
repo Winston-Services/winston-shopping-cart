@@ -362,24 +362,7 @@ export default function ItemCard(props) {
           component={Box}
           color="secondary"
         >
-          <Grid align="center" sx={{ p: "6px", marginBottom: "6px" }}>
-            <Button
-              color="info"
-              variant="outlined"
-              onClick={() => {
-                state.cartItems.indexOf(props.id) !== -1
-                  ? dispatch({ type: "removeFromCart", payload: props.id })
-                  : dispatch({ type: "addToCart", payload: props.id });
-              }}
-            >
-              {state.cartItems.indexOf(props.id) !== -1
-                ? "Remove From Cart"
-                : "Add To Cart"}
-            </Button>{" "}
-            <Button color="success" variant="outlined">
-              Buy Now
-            </Button>
-          </Grid>
+          {CartItemHandler(state, props, dispatch)}
           <Grid
             item
             xs={12}
@@ -394,27 +377,52 @@ export default function ItemCard(props) {
               {props.description}
             </Typography>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              marginBottom: "6px",
-              m: "8px",
-              borderRadius: "0px 0px 6px 6px",
-              backgroundColor: "#a266e3"
-            }}
-          >
-            <FullWidthTabs
-              overview={props.overview}
-              reviews={props.reviews}
-              manufactures={props.manufactures}
-            />
-          </Grid>
+          {ProductInformationTabs(props)}
         </CardContent>
       </Collapse>
     </Card>
   );
 }
+function CartItemHandler(state, props, dispatch) {
+  
+  return <Grid align="center" sx={{ p: "6px", marginBottom: "6px" }}>
+    <Button
+      color="info"
+      variant="outlined"
+      onClick={() => {
+        state.cartItems.indexOf(props.id) !== -1
+          ? dispatch({ type: "removeFromCart", payload: props.id })
+          : dispatch({ type: "addToCart", payload: props.id });
+      } }
+    >
+      {state.cartItems.indexOf(props.id) !== -1
+        ? "Remove From Cart"
+        : "Add To Cart"}
+    </Button>{" "}
+    <Button color="success" variant="outlined">
+      Buy Now
+    </Button>
+  </Grid>;
+}
+
+function ProductInformationTabs(props) {
+  return <Grid
+    item
+    xs={12}
+    sx={{
+      marginBottom: "6px",
+      m: "8px",
+      borderRadius: "0px 0px 6px 6px",
+      backgroundColor: "#a266e3"
+    }}
+  >
+    <FullWidthTabs
+      overview={props.overview}
+      reviews={props.reviews}
+      manufactures={props.manufactures} />
+  </Grid>;
+}
+
 function ProductItemTags(props) {
   return (
     <Grid container display={"flex"} alignItems={"center"}>

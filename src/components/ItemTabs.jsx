@@ -85,7 +85,7 @@ export default function FullWidthTabs(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <Typography component="subtitle1">
+        <Typography variant="subtitle1">
           {props.overview}
         </Typography>
       </TabPanel>
@@ -95,7 +95,7 @@ export default function FullWidthTabs(props) {
       <TabPanel value={value} index={2} dir={theme.direction}>
         <Grid container display="block">
           <Grid item sm={12}>
-            <Typography component="subtitle1">Reviews</Typography>
+            <Typography variant="subtitle1">Reviews</Typography>
           </Grid>
           {props.reviews.map((review, id) =>
             <ReviewCard review={review} key={`review-${id}`} />

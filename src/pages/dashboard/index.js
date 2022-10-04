@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { styled } from "@mui/material/styles";
 import {
@@ -27,6 +28,7 @@ import RecentTransactions from "../../components/RecentTransactions";
 import TopUsers from "../../components/TopUsers";
 import Table from "../../components/Table";
 import BalanceChart from "../../components/BalanceChart";
+import { Switch } from "@mui/material";
 
 export default function Dashboard() {
   const appState = React.useContext(store);
@@ -173,8 +175,7 @@ export default function Dashboard() {
                               </IconButton>
                               <IconButton
                                 aria-label="comments"
-                                
-                              title="Comments"
+                                title="Comments"
                                 onClick={() => {
                                   dispatch({
                                     type: "addToCart",
@@ -339,194 +340,557 @@ function ProductDashboardContent() {
 }
 
 function SettingDashboardContent() {
+  const [checked, setChecked] = React.useState({ 1: true, 2: true });
+
+  const handleChange = (event, id) => {
+    console.log(event.target.checked);
+    setChecked({ ...checked, [id]: !checked[id] });
+  };
+
+  const OnOffSwitch = props => {
+    return <Switch {...props} />;
+  };
+
+  const UIOnOffSwitch = styled(OnOffSwitch)(({ theme }) => ({
+    width: 62,
+    height: 34,
+    padding: 7,
+    "& .MuiSwitch-switchBase": {
+      margin: 1,
+      padding: 0,
+      transform: "translateX(6px)",
+      "&.Mui-checked": {
+        color: "#fff",
+        transform: "translateX(22px)",
+        "& + .MuiSwitch-track": {
+          opacity: 1,
+          backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be"
+        }
+      }
+    },
+    "& .MuiSwitch-thumb": {
+      backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
+      width: 32,
+      height: 32,
+      "&:before": {
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        left: 0,
+        top: 0,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center"
+      }
+    },
+    "& .MuiSwitch-track": {
+      opacity: 1,
+      backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
+      borderRadius: 20 / 2
+    }
+  }));
+
   return (
     <CardContent>
       <Typography component="h2" variant="title">
         Settings
       </Typography>
-      <Divider />
       <Typography variant="body1">
         Manage your cart preferences and settings.
       </Typography>
+      <Divider
+        component={Box}
+        height="8px"
+        sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+      />
       <Typography component="h3" variant="title">
         General Settings
       </Typography>
-      <Divider />
-      Shipping And Handling Policy Terms Of Use Policy Privacy Policy GDPR
-      Policy Cookie Policy
+      <Divider
+        component={Box}
+        height="4px"
+        sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+      />
+      <Paper
+        variant="outlined"
+        elevation={3}
+        sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+      >
+        <Table
+          columns={[
+            { id: "param", headerName: "Policy" },
+            { id: "view", headerName: "View" },
+            { id: "upload", headerName: "Upload" },
+            { id: "download", headerName: "Download" }
+          ]}
+          rows={[
+            {
+              param: "Shipping And Handling Policy",
+              view: <Button>View</Button>,
+              upload: <Button>Upload</Button>,
+              download: <Button>Download</Button>
+            },
+            {
+              param: "Terms Of Use Policy",
+              view: <Button>View</Button>,
+              upload: <Button>Upload</Button>,
+              download: <Button>Download</Button>
+            },
+            {
+              param: "Privacy Policy",
+              view: <Button>View</Button>,
+              upload: <Button>Upload</Button>,
+              download: <Button>Download</Button>
+            },
+            {
+              param: "GDPR Policy",
+              view: <Button>View</Button>,
+              upload: <Button>Upload</Button>,
+              download: <Button>Download</Button>
+            },
+            {
+              param: "Cookie Policy",
+              view: <Button>View</Button>,
+              upload: <Button>Upload</Button>,
+              download: <Button>Download</Button>
+            }
+          ]}
+        />
+      </Paper>
       <Typography component="h3" variant="title">
-        Language Settings
+        Language Settings{" "}
+        <span
+          className="clickable"
+          style={{ float: "right" }}
+          title="Click the field to edit the value."
+        >
+          ℹ️
+        </span>
       </Typography>
-      <Divider />
-      <Table
-        columns={[
-          { id: "param", headerName: "" },
-          { id: "language", headerName: "Language" },
-          { id: "country", headerName: "Country" },
-          { id: "code", headerName: "Code" }
-        ]}
-        rows={[
-          {
-            param: "Primary Language",
-            language: "English",
-            country: "US",
-            code: "en_US"
-          }
-        ]}
+      <Divider
+        component={Box}
+        height="8px"
+        sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+      />
+      <Paper
+        variant="outlined"
+        elevation={3}
+        sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+      >
+        <Table
+          columns={[
+            { id: "param", headerName: "" },
+            { id: "language", headerName: "Language" },
+            { id: "country", headerName: "Country" },
+            { id: "code", headerName: "Code" }
+          ]}
+          rows={[
+            {
+              param: "Primary Language",
+              language: (
+                <Typography onClick={() => {}} className="clickable">
+                  English
+                </Typography>
+              ),
+              country: (
+                <Typography onClick={() => {}} className="clickable">
+                  US
+                </Typography>
+              ),
+              code: (
+                <Typography onClick={() => {}} className="clickable">
+                  en_US
+                </Typography>
+              )
+            }
+          ]}
+        />
+      </Paper>
+      <Typography component="h3" variant="title">
+        Site Metadata{" "}
+        <span
+          className="clickable"
+          style={{ float: "right" }}
+          title="Click the field to edit the value."
+        >
+          ℹ️
+        </span>
+      </Typography>
+      <Divider
+        component={Box}
+        height="8px"
+        sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+      />
+      <Paper
+        variant="outlined"
+        elevation={3}
+        sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+      >
+        <Table
+          columns={[
+            { id: "param", headerName: "Setting" },
+            { id: "value", headerName: "Value" }
+          ]}
+          rows={[
+            {
+              param: "Title",
+              value: (
+                <Typography onClick={() => {}} className="clickable">
+                  Default Title
+                </Typography>
+              )
+            },
+            {
+              param: "Description",
+              value: (
+                <Typography onClick={() => {}} className="clickable">
+                  Default Description
+                </Typography>
+              )
+            },
+            {
+              param: "Keywords",
+              value: (
+                <Typography onClick={() => {}} className="clickable">
+                  Default Keywords
+                </Typography>
+              )
+            },
+            {
+              param: "Copyright",
+              value: (
+                <Typography onClick={() => {}} className="clickable">
+                  Default Copyright
+                </Typography>
+              )
+            }
+          ]}
+        />
+      </Paper>
+      <Paper
+        variant="outlined"
+        elevation={3}
+        sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+      >
+        <Typography component="h3" variant="title">
+          Checkout Settings{" "}
+        </Typography>
+        <Divider
+          component={Box}
+          height="8px"
+          sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+        />
+
+        <Typography component="h4" variant="title">
+          Payment Types{" "}
+          <span
+            className="clickable"
+            style={{ float: "right" }}
+            title="Click the switch to tiggle the setting."
+          >
+            ℹ️
+          </span>
+        </Typography>
+        <Divider
+          component={Box}
+          height="4px"
+          sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+        />
+        <Paper
+          variant="outlined"
+          elevation={3}
+          sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+        >
+          <Table
+            columns={[
+              { id: "param", headerName: "Payment Type" },
+              { id: "value", headerName: "Status" }
+            ]}
+            rows={[
+              {
+                param: "Cryptocurrency",
+                value: (
+                  <Typography>
+                    Enabled{" "}
+                    <UIOnOffSwitch
+                      checked={checked[1]}
+                      onClick={e => handleChange(e, "1")}
+                    />{" "}
+                    Disabled
+                  </Typography>
+                )
+              },
+              {
+                param: "Credit Card",
+                value: (
+                  <Typography className="clickable">
+                    Enabled{" "}
+                    <UIOnOffSwitch
+                      checked={checked[2]}
+                      onChange={e => handleChange(e, "2")}
+                    />{" "}
+                    Disabled
+                  </Typography>
+                )
+              }
+            ]}
+          />
+        </Paper>
+
+        <Typography component="h4" variant="title">
+          Cryptocurrency Payment Addresses{" "}
+          <span
+            className="clickable"
+            style={{ float: "right" }}
+            title="Click the field to edit the value."
+          >
+            ℹ️
+          </span>
+        </Typography>
+        <Divider
+          component={Box}
+          height="4px"
+          sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+        />
+        <Paper
+          variant="outlined"
+          elevation={3}
+          sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+        >
+          <Table
+            columns={[
+              { id: "param", headerName: "Chain" },
+              { id: "value", headerName: "Address" }
+            ]}
+            rows={[
+              {
+                param: "Winston",
+                value: (
+                  <Typography onClick={() => {}} className="clickable">
+                    Not Set
+                  </Typography>
+                )
+              },
+              {
+                param: "Binance",
+                value: (
+                  <Typography onClick={() => {}} className="clickable">
+                    Not Set
+                  </Typography>
+                )
+              },
+              {
+                param: "Ethereum",
+                value: (
+                  <Typography onClick={() => {}} className="clickable">
+                    Not Set
+                  </Typography>
+                )
+              },
+              {
+                param: "Polygon",
+                value: (
+                  <Typography onClick={() => {}} className="clickable">
+                    Not Set
+                  </Typography>
+                )
+              },
+              {
+                param: "Gnosis",
+                value: (
+                  <Typography onClick={() => {}} className="clickable">
+                    Not Set
+                  </Typography>
+                )
+              },
+              {
+                param: "Harmony One",
+                value: (
+                  <Typography onClick={() => {}} className="clickable">
+                    Not Set
+                  </Typography>
+                )
+              }
+            ]}
+          />
+        </Paper>
+
+        <Typography component="h4" variant="title">
+          Default Payment Currency{" "}
+          <span
+            className="clickable"
+            style={{ float: "right" }}
+            title="Click the field to edit the value."
+          >
+            ℹ️
+          </span>
+        </Typography>
+        <Divider
+          component={Box}
+          height="4px"
+          sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+        />
+        <Paper
+          variant="outlined"
+          elevation={3}
+          sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+        >
+          <Table
+            columns={[
+              { id: "type", headerName: "Processor" },
+              { id: "network", headerName: "Network" },
+              { id: "currency", headerName: "Currency" }
+            ]}
+            rows={[
+              {
+                type: "Crypto",
+                network: "Binance Smart Chain",
+                currency: "WIN"
+              }
+            ]}
+          />
+        </Paper>
+
+        <Typography component="h4" variant="title">
+          Payment Currencies{" "}
+          <span
+            className="clickable"
+            style={{ float: "right" }}
+            title="Click the field to edit the value."
+          >
+            ℹ️
+          </span>
+        </Typography>
+        <Divider
+          component={Box}
+          height="4px"
+          sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+        />
+        <Paper
+          variant="outlined"
+          elevation={3}
+          sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+        >
+          <Table
+            columns={[
+              { id: "type", headerName: "Processor" },
+              { id: "network", headerName: "Network" },
+              { id: "currency", headerName: "Currency" }
+            ]}
+            rows={[
+              {
+                type: "Credit Card",
+                network: "NMI",
+                currency: ["USD", "CAD"].join(" ")
+              },
+              {
+                type: "Crypto",
+                network: "Binance Smart Chain",
+                currency: ["BNB", "BUSD", "USDC", "USDT", "RKL", "WIN"].join(
+                  " "
+                )
+              },
+              {
+                type: "Crypto",
+                network: "Ethereum",
+                currency: ["ETH", "USDC", "RKL"].join(" ")
+              },
+              {
+                type: "Crypto",
+                network: "Polygon",
+                currency: ["MATIC", "USDC", "MIMATIC", "RKL"].join(" ")
+              },
+              {
+                type: "Crypto",
+                network: "Gnosis",
+                currency: ["XDAI", "USDC", "RKL"].join(" ")
+              }
+            ]}
+          />
+        </Paper>
+      </Paper>
+      <Typography component="h3" variant="title">
+        Storage Settings{" "}
+        <span
+          className="clickable"
+          style={{ float: "right" }}
+          title="Click the field to edit the value."
+        >
+          ℹ️
+        </span>
+      </Typography>
+      <Divider
+        component={Box}
+        height="8px"
+        sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+      />
+      <Paper
+        variant="outlined"
+        elevation={3}
+        sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
+      >
+        <Typography component="h4" variant="title">
+          Product Listing Options{" "}
+          <span
+            className="clickable"
+            style={{ float: "right" }}
+            title="Click the field to edit the value."
+          >
+            ℹ️
+          </span>
+        </Typography>
+        <Divider
+          component={Box}
+          height="4px"
+          sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+        />
+        <ul>
+          <li>Use Github For Product List </li>
+          <li>Use API For Product</li>
+          <li>List Use Winston For Product List</li>
+          <li>Use Config File for Product List</li>
+        </ul>
+      </Paper>
+      <Typography component="h3" variant="title">
+        Blockchain API Settings{" "}
+        <span
+          className="clickable"
+          style={{ float: "right" }}
+          title="Click the field to edit the value."
+        >
+          ℹ️
+        </span>
+      </Typography>
+      <Divider
+        component={Box}
+        height="8px"
+        sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
+      />
+
+      <Paper
+        variant="outlined"
+        elevation={3}
+        sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
       />
       <Typography component="h3" variant="title">
-        Site Metadata
+        Wallet Settings{" "}
+        <span
+          className="clickable"
+          style={{ float: "right" }}
+          title="Click the field to edit the value."
+        >
+          ℹ️
+        </span>
       </Typography>
-      <Divider />
-      <Table
-        columns={[
-          { id: "param", headerName: "" },
-          { id: "value", headerName: "Value" }
-        ]}
-        rows={[
-          {
-            param: "Title",
-            value: ""
-          },
-          {
-            param: "Description",
-            value: ""
-          },
-          {
-            param: "Keywords",
-            value: ""
-          },
-          {
-            param: "Copyright",
-            value: ""
-          }
-        ]}
+      <Divider
+        component={Box}
+        height="8px"
+        sx={{ backgroundColor: "rgba(0,0,0,.15)" }}
       />
-      <Typography component="h3" variant="title">
-        Checkout Settings
-      </Typography>
-      <Divider />
-      <Typography component="h4" variant="title">
-        Payment Types
-      </Typography>
-      <Table
-        columns={[
-          { id: "param", headerName: "Payment Type" },
-          { id: "value", headerName: "Status" }
-        ]}
-        rows={[
-          {
-            param: "Cryptocurrency",
-            value: "Enabled | Disabled"
-          },
-          {
-            param: "Credit Card",
-            value: "Enabled | Disabled"
-          }
-        ]}
+      <Paper
+        variant="outlined"
+        elevation={3}
+        sx={{ paddingX: "16px", paddingY: "8px", marginY: "4px" }}
       />
-      <Typography component="h4" variant="title">
-        Cryptocurrency Payment Addresses
-      </Typography>
-      <Table
-        columns={[
-          { id: "param", headerName: "Chain" },
-          { id: "value", headerName: "Address" }
-        ]}
-        rows={[
-          {
-            param: "Binance",
-            value: "0x0"
-          },
-          {
-            param: "Ethereum",
-            value: "0x0"
-          },
-          {
-            param: "Polygon",
-            value: "0x0"
-          },
-          {
-            param: "Gnosis",
-            value: "0x0"
-          }
-        ]}
-      />
-      <Typography component="h4" variant="title">
-        Default Payment Currency
-      </Typography>
-      <Table
-        columns={[
-          { id: "type", headerName: "Processor" },
-          { id: "network", headerName: "Network" },
-          { id: "currency", headerName: "Currency" }
-        ]}
-        rows={[
-          {
-            type: "crypto",
-            network: "bnb",
-            currency: "WIN"
-          }
-        ]}
-      />
-      <Typography component="h4" variant="title">
-        Payment Currencies
-      </Typography>
-      <Table
-        columns={[
-          { id: "type", headerName: "Processor" },
-          { id: "network", headerName: "Network" },
-          { id: "currency", headerName: "Currency" }
-        ]}
-        rows={[
-          {
-            type: "credit-card",
-            network: "nmi",
-            currency: ["USD", "CAD"].join(" ")
-          },
-          {
-            type: "crypto",
-            network: "bnb",
-            currency: ["BNB", "BUSD", "USDC", "USDT", "RKL", "WIN"].join(" ")
-          },
-          {
-            type: "crypto",
-            network: "eth",
-            currency: ["ETH", "USDC", "RKL"].join(" ")
-          },
-          {
-            type: "crypto",
-            network: "polygon",
-            currency: ["MATIC", "USDC", "MIMATIC", "RKL"].join(" ")
-          },
-          {
-            type: "crypto",
-            network: "xdai",
-            currency: ["XDAI", "USDC", "RKL"].join(" ")
-          }
-        ]}
-      />
-      <Typography component="h3" variant="title">
-        Storage Settings
-      </Typography>
-      <Divider />
-      <Typography component="h4" variant="title">
-        Product Listing Options
-      </Typography>
-      <ul>
-        <li>Use Github For Product List </li>
-        <li>Use API For Product</li>
-        <li>List Use Winston For Product List</li>
-        <li>Use Config File for Product List</li>
-      </ul>
-      <Typography component="h3" variant="title">
-        Blockchain API Settings
-      </Typography>
-      <Divider />
-      <Typography component="h3" variant="title">
-        Wallet Settings
-      </Typography>
-      <Divider />
     </CardContent>
   );
 }
