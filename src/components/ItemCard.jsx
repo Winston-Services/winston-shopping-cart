@@ -181,7 +181,7 @@ export default function ItemCard(props) {
                 width="190px"
                 height="193.15px"
                 alt={props.images[0].alt}
-                className="productImage"
+                className="productImage clickable"
               />
             </Paper>
           </Grid>

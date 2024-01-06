@@ -50,11 +50,14 @@ const ReviewCard = props => {
         </a>
 
         <Typography variant="subtitle2">
-          {Array(props.review.rating).fill('🌟').join('')}<span style={{float:"right"}}>{props.review.rating} Stars</span>
+          {Array(props.review.rating).fill("🌟").join("")}
+          <span style={{ float: "right" }}>
+            {props.review.rating} Stars
+          </span>
         </Typography>
 
         <Typography>
-        🗣️{props.review.comment}
+          <span color="white">🗣️</span>{props.review.comment}
         </Typography>
       </Paper>
     </Grid>

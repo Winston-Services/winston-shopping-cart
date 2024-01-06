@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function SelectPaymentMethod() {
-  return <></>;
+  return <>Select Payment Method.</>;
 }

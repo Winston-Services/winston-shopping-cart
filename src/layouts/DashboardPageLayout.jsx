@@ -3,8 +3,10 @@ import React, { Suspense } from "react";
 import { Box, Container, Grid, CircularProgress } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Header from "./common/Header";
-
+import { store } from "../store";
 function DashboardPageLayout() {
+  const appState = React.useContext(store);
+  const { state } = appState;
   return (
     <Box>
       <Header />
@@ -36,7 +38,7 @@ function DashboardPageLayout() {
             Powered By: Winston Services
           </Grid>
           <Grid item justifyContent={"flex-end"}>
-            Copyright © 2022 M.A.D. Computer Consulting LLC
+            {state.settings.siteMetadata.copyright}
           </Grid>
         </Grid>
       </Container>
