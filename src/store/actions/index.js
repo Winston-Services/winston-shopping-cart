@@ -26,7 +26,21 @@ import { setCurrency } from "./setCurrency";
 import { setShowShare } from "./setShowShare";
 import { addToCart } from "./addToCart";
 import { removeFromCart } from "./removeFromCart";
+import { togglePageOptionsBar } from "./togglePageOptionsBar";
+import { setProductDialogValue } from "./admin/products/setProductDialogValue";
+import { setProductFormValue } from "./admin/products/setProductFormValue";
+import { toggleAddProductModel } from "./admin/products/toggleAddProductModel";
 
+import { setSelectedCategoryOption } from "./setSelectedCategoryOption";
+import { setPageItems } from "./setPageItems";
+import { setSelectedSubcategoryOption } from "./setSelectedSubcategoryOption";
+import { setSortType } from './setSortType';
+import { toggleSettingsTab } from './toggleSettingsTab';
+import { saveSiteMetadata } from './saveSiteMetadata';
+import { toggleBlockchainSettingsSection } from './toggleBlockchainSettingsSection';
+
+
+import { addNetwork } from './admin/networks/addNetwork';
 export const actions = {
   firstName,
   error,
@@ -55,5 +69,17 @@ export const actions = {
   addToWishList,
   removeFromWishList,
   addToCart,
-  removeFromCart
+  removeFromCart,
+  togglePageOptionsBar,
+  setProductDialogValue,
+  setProductFormValue,
+  toggleAddProductModel,
+  setSelectedCategoryOption,
+  setPageItems,
+  setSelectedSubcategoryOption,
+  setSortType,
+  toggleSettingsTab,
+  saveSiteMetadata,
+  toggleBlockchainSettingsSection,
+  addNetwork
 };

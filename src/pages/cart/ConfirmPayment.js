@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function ConfirmPayment() {
-  return <></>;
+  return <>Confirm Payment</>;
 }

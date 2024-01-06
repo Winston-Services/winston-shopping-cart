@@ -1,15 +1,31 @@
-import React from "react";
+import React, { Suspense } from "react";
 
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, CircularProgress } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Header from "./common/Header";
-
+import { store } from "../store";
 function DashboardPageLayout() {
+  const appState = React.useContext(store);
+  const { state } = appState;
   return (
     <Box>
       <Header />
       <Box sx={{ minHeight: "calc(100vh - 350px) ", height: "100%" }}>
-        <Outlet />
+        <Suspense
+          fallback={
+            <Box
+              display="flex"
+              justifyContent={"center"}
+              alignItems="center"
+              height={"100%"}
+              minHeight="100%"
+            >
+              <CircularProgress />
+            </Box>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </Box>
       <Container sx={{ my: 4 }}>
         <Grid
@@ -22,7 +38,7 @@ function DashboardPageLayout() {
             Powered By: Winston Services
           </Grid>
           <Grid item justifyContent={"flex-end"}>
-            Copyright © 2022 M.A.D. Computer Consulting LLC
+            {state.settings.siteMetadata.copyright}
           </Grid>
         </Grid>
       </Container>

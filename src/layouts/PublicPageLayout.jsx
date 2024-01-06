@@ -3,9 +3,11 @@ import React, { Suspense } from "react";
 import { Box, Container, Grid, CircularProgress } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Header from "./common/Header";
-import config from "../config";
+import { store } from "../store";
 
 function PublicPageLayout() {
+  const appState = React.useContext(store);
+  const { state } = appState;
   return (
     <Box>
       <Header />
@@ -37,7 +39,7 @@ function PublicPageLayout() {
             Powered By: Winston Services
           </Grid>
           <Grid item justifyContent={"flex-end"}>
-            {config.copyright}
+            {state.settings.siteMetadata.copyright}
           </Grid>
         </Grid>
       </Container>

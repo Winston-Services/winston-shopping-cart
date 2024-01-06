@@ -5,7 +5,6 @@ import PublicPageLayout from "./layouts/PublicPageLayout";
 import DashboardPageLayout from "./layouts/DashboardPageLayout";
 import config from "./config";
 import { store } from "./store";
-
 const MainComponent = React.lazy(() => import("./pages/Main"));
 const SetupComponent = React.lazy(() => import("./pages/setup"));
 const SignInComponent = React.lazy(() => import("./pages/signin"));
@@ -32,8 +31,19 @@ function App() {
               payload: client
             });
           });
+          state.socketClient.on("error", () => {
+            // do nothing.
+          });
         }
       }
+      document.title = state.settings.siteMetadata.title;
+      const description = document.head.querySelector('meta[name="description"]')
+      let descriptionContent = description.attributes.getNamedItem('content');
+      descriptionContent.value = state.settings.siteMetadata.description;
+      const keywords = document.head.querySelector('meta[name="keywords"]');
+      let keywordsContent = keywords.attributes.getNamedItem('content');
+      keywordsContent.value = state.settings.siteMetadata.keywords;
+      document.title = state.settings.siteMetadata.title;
     }
     return () => {
       active = false;
@@ -99,7 +109,7 @@ function App() {
                       height={"100vh"}
                       minHeight="100%"
                     >
-                      <CircularProgress  color="info"/>
+                      <CircularProgress color="info" />
                     </Box>
                   }
                 >
@@ -108,26 +118,27 @@ function App() {
               }
             />}
 
-        {config.admin.length !== 0 && <Route
-              path="/sign-up"
-              element={
-                <Suspense
-                  fallback={
-                    <Box
-                      display="flex"
-                      justifyContent={"center"}
-                      alignItems="center"
-                      height={"100vh"}
-                      minHeight="100%"
-                    >
-                      <CircularProgress  color="info"/>
-                    </Box>
-                  }
-                >
-                  <SignInComponent register/>
-                </Suspense>
-              }
-            />}   
+        {config.admin.length !== 0 &&
+          <Route
+            path="/sign-up"
+            element={
+              <Suspense
+                fallback={
+                  <Box
+                    display="flex"
+                    justifyContent={"center"}
+                    alignItems="center"
+                    height={"100vh"}
+                    minHeight="100%"
+                  >
+                    <CircularProgress color="info" />
+                  </Box>
+                }
+              >
+                <SignInComponent register />
+              </Suspense>
+            }
+          />}
       </Route>
       <Route path="*" element={<Navigate to={"/"} />} />
     </Routes>

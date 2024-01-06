@@ -125,7 +125,7 @@ const rows = [
     price: '26000',
     paid: '26000',
   },{
-    id: '1',
+    id: '2',
     date: '09 Mar,2022',
     category: 'Sports Wear',
     productId: "Xddd-sddsd",
@@ -134,7 +134,7 @@ const rows = [
     price: '26000',
     paid: '26000',
   },{
-    id: '1',
+    id: '3',
     date: '10 Mar,2022',
     category: 'Sports Wear',
     productId: "Xddd-sddsd",

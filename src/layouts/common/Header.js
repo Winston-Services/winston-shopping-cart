@@ -64,9 +64,18 @@ function Header() {
                   </Button>
                   {authenticated &&
                     <React.Fragment>
-                      <Button onClick={() => navigate("/wishlist")}>
-                        Wishlist
-                      </Button>
+                      {cartItems.length !== 0 &&
+                        <Button
+                          onClick={() => {
+                            dispatch({
+                              type: "setCheckoutDisplayStep",
+                              payload: 0
+                            });
+                            return navigate("/wishlist");
+                          }}
+                        >
+                          Wishlist
+                        </Button>}
                       <Button onClick={() => navigate("/dashboard")}>
                         Dashboard
                       </Button>
